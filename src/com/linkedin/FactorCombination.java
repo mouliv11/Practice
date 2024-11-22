@@ -6,7 +6,6 @@ import java.util.List;
 // https://stackoverflow.com/questions/45662736/how-to-find-the-time-complexity-of-dfsbacktracking-algorithms
 public class FactorCombination {
 
-    private static int count = 0;
     public List<List<Integer>> getFactors(int n) {
         List<List<Integer>> result = new ArrayList<>();
         process(2, result, new ArrayList<Integer>(), n);
@@ -31,6 +30,5 @@ public class FactorCombination {
     public static void main(String[] args) {
         FactorCombination f = new FactorCombination();
         List<List<Integer>> result = f.getFactors(8);
-        System.out.println(count);
     }
 }

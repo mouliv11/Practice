@@ -28,8 +28,11 @@ class Permutations {
 
     public static void main(String args[]) {
         int[] nums = new int[]{1,2,3};
-        Permutations permutations = new Permutations();
-        permutations.permute(nums);
+        Permutations p = new Permutations();
+        List<List<Integer>> permutations = p.permute(nums);
+        for (List<Integer> permutation : permutations) {
+            System.out.println(permutation);
+        }
     }
 
 }

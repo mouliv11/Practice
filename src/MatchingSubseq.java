@@ -7,7 +7,7 @@ public class MatchingSubseq {
         int count = 0;
         Map<Character, Queue<String>> map = new HashMap<>();
         for (int i=0; i<s.length(); i++) {
-            map.putIfAbsent(s.charAt(i), (Queue<String>) new LinkedList());
+            map.putIfAbsent(s.charAt(i), new java.util.LinkedList());
         }
 
         for (int j=0; j<words.length; j++) {

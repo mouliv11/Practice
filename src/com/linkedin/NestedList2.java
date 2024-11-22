@@ -1,27 +1,11 @@
 package com.linkedin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NestedList2 {
 
-
-    // This is the interface that allows for creating nested lists.
-    // You should not implement it, or speculate about its implementation
-    public interface NestedInteger {
-
-        // @return true if this NestedInteger holds a single integer, rather than a nested list.
-        boolean isInteger();
-
-        // @return the single integer that this NestedInteger holds, if it holds a single integer
-        // Return null if this NestedInteger holds a nested list
-        Integer getInteger();
-
-        // @return the nested list that this NestedInteger holds, if it holds a nested list
-        // Return null if this NestedInteger holds a single integer
-        List<NestedInteger> getList();
-    }
-
-    public int depthSum(List<NestedInteger> nestedList) {
+    public int depthSum(List<NestedList.NestedInteger> nestedList) {
         int res = 0;
         if (nestedList == null || nestedList.size() == 0)
             return res;
@@ -29,9 +13,9 @@ public class NestedList2 {
         return depthSum(nestedList, ht);
     }
 
-    private int getHeight(List<NestedInteger> nestedList) { //[[1,1], 2, [1,1]]
+    private int getHeight(List<NestedList.NestedInteger> nestedList) { //[[1,1`], 2, [1,1]]
         int ht = 1;
-        for (NestedInteger item : nestedList) { //[1,1]
+        for (NestedList.NestedInteger item : nestedList) { //[1,1]
             if (!item.isInteger()) {
                 int tmp = getHeight(item.getList());
                 ht = Math.max(ht, tmp + 1);
@@ -40,9 +24,9 @@ public class NestedList2 {
         return ht;
     }
 
-    private int depthSum(List<NestedInteger> nestedList, int level) {
+    private int depthSum(List<NestedList.NestedInteger> nestedList, int level) {
         int res = 0;
-        for (NestedInteger item : nestedList) {
+        for (NestedList.NestedInteger item : nestedList) {
             if (item.isInteger()) {
                 res = res + item.getInteger() * level;
             } else {
@@ -53,7 +37,25 @@ public class NestedList2 {
     }
 
     public static void main(String[] args) {
+// Example: [[1, 1], 2, [1, 1]]
+        NestedIntegerImpl ni1 = new NestedIntegerImpl();
+        ni1.add(new NestedIntegerImpl(1));
+        ni1.add(new NestedIntegerImpl(1));
 
+        NestedIntegerImpl ni2 = new NestedIntegerImpl(2);
+
+        NestedIntegerImpl ni3 = new NestedIntegerImpl();
+        ni3.add(new NestedIntegerImpl(1));
+        ni3.add(new NestedIntegerImpl(1));
+
+        List<NestedList.NestedInteger> nestedList = new ArrayList<>();
+        nestedList.add(ni1);
+        nestedList.add(ni2);
+        nestedList.add(ni3);
+
+        NestedList2 solution = new NestedList2();
+        int result = solution.depthSum(nestedList);
+        System.out.println("Weighted Sum: " + result);  // Output should be 8
     }
 
 }

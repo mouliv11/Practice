@@ -32,7 +32,7 @@ public class MergeIntervals {
 
     public static void main(String[] args) {
         MergeIntervals m = new MergeIntervals();
-        int[][] intervals = new int[][]{{1,5}, {2,8}, {9,12}};
+        int[][] intervals = new int[][]{{6,10}, {1,5}};
         m.merge(intervals);
     }
 }

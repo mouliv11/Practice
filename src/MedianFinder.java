@@ -3,7 +3,8 @@ import java.util.PriorityQueue;
 
 public class MedianFinder {
 
-    PriorityQueue<Integer> maxHeap, minHeap;
+    PriorityQueue<Integer> maxHeap; // to store the smaller half of the numbers
+    PriorityQueue<Integer> minHeap; //to store the larger half of the numbers
 
     /** initialize your data structure here. */
     public MedianFinder() {

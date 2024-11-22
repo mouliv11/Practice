@@ -1,182 +1,75 @@
-// Java program to subtract smaller valued
-// list from larger valued list and return
-// result as a list.
-import java.util.*;
-import java.lang.*;
-import java.io.*;
-
-public class Sub2Nums {
-    static Node head; // head of list
-    boolean borrow;
-
-    /* Node Class */
-    static class Node {
-        int data;
-        Node next;
-
-        // Constructor to create a new node
-        Node(int d)
-        {
-            data = d;
-            next = null;
-        }
-    }
-
-    /* A utility function to get length of
-    linked list */
-    int getLength(Node node)
-    {
-        int size = 0;
-        while (node != null) {
-            node = node.next;
-            size++;
-        }
-        return size;
-    }
-
-    /* A Utility that padds zeros in front
-    of the Node, with the given diff */
-    Node paddZeros(Node sNode, int diff)
-    {
-        if (sNode == null)
-            return null;
-
-        Node zHead = new Node(0);
-        diff--;
-        Node temp = zHead;
-        while ((diff--) != 0) {
-            temp.next = new Node(0);
-            temp = temp.next;
-        }
-        temp.next = sNode;
-        return zHead;
-    }
-
-    /* Subtract LinkedList Helper is a recursive
-    function, move till the last Node, and
-    subtract the digits and create the Node and
-    return the Node. If d1 < d2, we borrow the
-    number from previous digit. */
-    Node subtractLinkedListHelper(Node l1, Node l2)
-    {
-        if (l1 == null && l2 == null && borrow == false)
-            return null;
-
-        Node previous
-                = subtractLinkedListHelper(
-                (l1 != null) ? l1.next
-                        : null,
-                (l2 != null) ? l2.next : null);
-
-        int d1 = l1.data;
-        int d2 = l2.data;
-        int sub = 0;
-
-		/* if you have given the value value to
-		next digit then reduce the d1 by 1 */
-        if (borrow) {
-            d1--;
-            borrow = false;
-        }
-
-		/* If d1 < d2, then borrow the number from
-		previous digit. Add 10 to d1 and set
-		borrow = true; */
-        if (d1 < d2) {
-            borrow = true;
-            d1 = d1 + 10;
-        }
-
-        /* subtract the digits */
-        sub = d1 - d2;
-
-        /* Create a Node with sub value */
-        Node current = new Node(sub);
-
-        /* Set the Next pointer as Previous */
-        current.next = previous;
-
-        return current;
-    }
-
-    /* This API subtracts two linked lists and
-    returns the linked list which shall have the
-    subtracted result. */
-    Node subtractLinkedList(Node l1, Node l2)
-    {
-        // Base Case.
-        if (l1 == null && l2 == null)
-            return null;
-
-        // In either of the case, get the lengths
-        // of both Linked list.
-        int len1 = getLength(l1);
-        int len2 = getLength(l2);
-
-        Node lNode = null, sNode = null;
-
-        Node temp1 = l1;
-        Node temp2 = l2;
-
-        // If lengths differ, calculate the smaller
-        // Node and padd zeros for smaller Node and
-        // ensure both larger Node and smaller Node
-        // has equal length.
-        if (len1 != len2) {
-            lNode = len1 > len2 ? l1 : l2;
-            sNode = len1 > len2 ? l2 : l1;
-            sNode = paddZeros(sNode, Math.abs(len1 - len2));
-        }
-
-        else {
-            // If both list lengths are equal, then
-            // calculate the larger and smaller list.
-            // If 5-6-7 & 5-6-8 are linked list, then
-            // walk through linked list at last Node
-            // as 7 < 8, larger Node is 5-6-8 and
-            // smaller Node is 5-6-7.
-            while (l1 != null && l2 != null) {
-                if (l1.data != l2.data) {
-                    lNode = l1.data > l2.data ? temp1 : temp2;
-                    sNode = l1.data > l2.data ? temp2 : temp1;
-                    break;
-                }
-                l1 = l1.next;
-                l2 = l2.next;
-            }
-        }
-
-        // After calculating larger and smaller Node,
-        // call subtractLinkedListHelper which returns
-        // the subtracted linked list.
-        borrow = false;
-        return subtractLinkedListHelper(lNode, sNode);
-    }
-
-    // function to display the linked list
-    static void printList(Node head)
-    {
-        Node temp = head;
-        while (temp != null) {
-            System.out.print(temp.data + " ");
-            temp = temp.next;
-        }
-    }
-
-    // Driver program to test above
-    public static void main(String[] args)
-    {
-        Node head = new Node(1);
-        head.next = new Node(0);
-        head.next.next = new Node(0);
-
-        Node head2 = new Node(1);
-
-        Sub2Nums ob = new Sub2Nums();
-        Node result = ob.subtractLinkedList(head, head2);
-
-        printList(result);
-    }
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
 }
 
-// This article is contributed by Chhavi
+public class Sub2Nums {
+
+    public ListNode subtractTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode current = dummy;
+        int borrow = 0;
+
+        while (l1 != null || l2 != null) {
+            // Get the current values or 0 if we run out of digits in either list
+            int x = (l1 != null) ? l1.val : 0;
+            int y = (l2 != null) ? l2.val : 0;
+
+            // Subtract y and the borrow from x
+            int diff = x - y - borrow;
+
+            // If diff is negative, we borrow from the next digit
+            if (diff < 0) {
+                diff += 10;
+                borrow = 1;
+            } else {
+                borrow = 0;
+            }
+
+            // Store the result digit in the current node
+            current.next = new ListNode(diff);
+            current = current.next;
+
+            // Move to the next digits
+            if (l1 != null) l1 = l1.next;
+            if (l2 != null) l2 = l2.next;
+        }
+
+        // Remove any leading zeros from the result
+        return removeLeadingZeros(dummy.next);
+    }
+
+    // Helper function to remove leading zeros from the result list
+    private ListNode removeLeadingZeros(ListNode head) {
+        while (head != null && head.val == 0) {
+            head = head.next;
+        }
+        return (head == null) ? new ListNode(0) : head;
+    }
+
+    public static void main(String[] args) {
+        Sub2Nums solution = new Sub2Nums();
+
+        // Example: l1 = [7, 1, 6], l2 = [5, 9, 2]
+        ListNode l1 = new ListNode(7, new ListNode(1, new ListNode(6))); // 617
+        ListNode l2 = new ListNode(5, new ListNode(9, new ListNode(2))); // 295
+
+        ListNode result = solution.subtractTwoNumbers(l1, l2); // Expected: [2, 2, 3]
+
+        // Print the result
+        printList(result);  // Output: 2 -> 2 -> 3
+    }
+
+    // Helper function to print the linked list
+    private static void printList(ListNode head) {
+        while (head != null) {
+            System.out.print(head.val);
+            if (head.next != null) System.out.print(" -> ");
+            head = head.next;
+        }
+        System.out.println();
+    }
+}

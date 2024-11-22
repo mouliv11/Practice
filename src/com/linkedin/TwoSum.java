@@ -6,27 +6,27 @@ import java.util.Map;
 public class TwoSum {
 
     private Map<Integer, Integer> map;
+
     public TwoSum() {
         map = new HashMap<>();
     }
 
-    public void add(int number) {
-        map.put(number, map.getOrDefault(number, 0) + 1);
+    public void add(Integer value) {
+        map.putIfAbsent(value, map.getOrDefault(value, 0) + 1);
     }
 
-    public boolean find(int target) {
-        for (int i : map.keySet()) {
-            int j = target - i;
-            int counter;
-            if (target == i)
-                counter = 2;
-            else
-                counter = 1;
-            if (map.getOrDefault(target, 0) >= counter) {
+    public Boolean find(Integer target) {
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            int complement = target - entry.getKey();
+            if (complement == entry.getKey()) {
+                if (entry.getValue() > 1)
+                    return true;
+            } else if (map.containsKey(complement)) {
                 return true;
             }
         }
         return false;
+
     }
 
     public static void main (String[] args) {
@@ -36,6 +36,6 @@ public class TwoSum {
         twoSum.add(5);
         twoSum.add(4);
         twoSum.add(7);
-        System.out.println(twoSum.find(4));
+        System.out.println(twoSum.find(8));
     }
 }

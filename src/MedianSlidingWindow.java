@@ -1,7 +1,7 @@
 import java.util.Collections;
 import java.util.PriorityQueue;
 
-class Solution {
+public class MedianSlidingWindow {
     public double[] medianSlidingWindow(int[] nums, int k) {
         MedianQueue medianQueue = new MedianQueue();
         double[] result = new double[nums.length - k + 1];
@@ -50,7 +50,7 @@ class Solution {
 
     public static void main(String args[]) {
         int[] nums = new int[]{1,3,-1,-3,5,3,6,7};
-        Solution s = new Solution();
+        MedianSlidingWindow s = new MedianSlidingWindow();
         s.medianSlidingWindow(nums, 3);
     }
 }

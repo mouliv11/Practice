@@ -30,8 +30,11 @@ public class Permute {
     }
 
     public static void main(String args[]) {
-        int[] arr = new int[]{1,2,3};
+        int[] arr = new int[]{1,1,2};
         Permute p = new Permute();
-        p.permute(arr);
+        List<List<Integer>> permutations = p.permute(arr);
+        for (List<Integer> permutation : permutations) {
+            System.out.println(permutation);
+        }
     }
 }

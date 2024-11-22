@@ -16,4 +16,14 @@ public class ShortestWordDist {
         return res;
     }
 
+    public static void main(String[] args) {
+        String[] words = {"practice", "makes", "perfect", "coding", "makes"};
+
+        // Instantiate the WordDistance class
+        ShortestWordDist wordDistance = new ShortestWordDist();
+
+        // Test queries
+        System.out.println("Shortest distance between 'coding' and 'practice': " + wordDistance.getShortestDistance(words, "coding", "practice"));  // Output: 3
+        System.out.println("Shortest distance between 'makes' and 'coding': " + wordDistance.getShortestDistance(words, "makes", "coding"));
+    }
 }
